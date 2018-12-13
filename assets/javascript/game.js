@@ -34,18 +34,38 @@ $("button").on("click", function () {
       var p = $('<p>');
       p.text('Rating: ' + results[i].rating);
 
-      // changes image settings of button that is clicked
+      // changes image settings of populated gifs
       var searchImage = $('<img>');
-      searchImage.attr('src', results[i].images.original.url);
+      searchImage.attr('src', results[i].images.fixed_height.url);
+      searchImage.attr('data-state', 'still');
+      searchImage.attr('still-source', results[i].images.fixed_height_still.url);
+      searchImage.attr('animate-source', results[i].images.fixed_height.url);
+      searchImage.addClass('gif');
+      // adds image and text to its own div
       searchDiv.append(p);
       searchDiv.append(searchImage);
-      searchDiv.addClass('gif');
       $('#gifs-appear-here').prepend(searchDiv);
-      
+
     }
 
+    $('.gif').on("click", function () {
 
+      // Pulls attribute to see if the gif is playing or not
+      var state = $(this).attr("data-state");
+
+      // if image is playing and its clicked, it pauses
+      // if image is still and its clicked, it plays
+
+      if (state === "still") {
+        $(this).attr("src", $(this).attr("animate-source"));
+        $(this).attr("data-state", "animate");
+      } else {
+        $(this).attr("src", $(this).attr("still-source"));
+        $(this).attr("data-state", "still");
+      }
+    });
 
   });
 
 });
+
