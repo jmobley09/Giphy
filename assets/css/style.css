@@ -1,0 +1,9 @@
+.img {
+    float: left;
+    margin: 2%;
+}
+
+button {
+    margin: .5%;
+    background-color: aquamarine
+}

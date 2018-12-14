@@ -13,6 +13,8 @@ function buttons() {
     $('#game-buttons').append(btnTag);
   }
 }
+
+// calls buttons function before click events
 buttons();
 
 $("button").on("click", function () {
@@ -41,7 +43,9 @@ $("button").on("click", function () {
       searchImage.attr('still-source', results[i].images.fixed_height_still.url);
       searchImage.attr('animate-source', results[i].images.fixed_height.url);
       searchImage.addClass('gif');
+
       // adds image and text to its own div
+      searchDiv.addClass('img');
       searchDiv.append(p);
       searchDiv.append(searchImage);
       $('#gifs-appear-here').prepend(searchDiv);
