@@ -5,11 +5,14 @@ var Searches = ['hamster', 'parrot', 'fish'];
 
 // creates buttons and add to page
 function buttons() {
+
   for (var i = 0; i < Searches.length; i++) {
+
     var btnTag = $('<button>');
 
     btnTag.attr('name', Searches[i]);
     btnTag.append(Searches[i]);
+    btnTag.addClass('Search');
     $('#game-buttons').append(btnTag);
   }
 }
@@ -17,18 +20,39 @@ function buttons() {
 // calls buttons function before click events
 buttons();
 
-$("button").on("click", function () {
+// Adds button to page when custom search is filled out
+$('#add-button').click(function () {
+  event.preventDefault();
+  if ($('#button-input').val() == '') {
+    alert('You Must Enter in an Item to Search. Try again!');
+  } else {
+    var newButton = $('#button-input').val();
+
+    var btnTag = $('<button>');
+
+    btnTag.attr('name', newButton);
+    btnTag.append(newButton);
+    btnTag.addClass('Search');
+    $('#game-buttons').append(btnTag);
+  }
+
+});
+
+// Click Event for the buttons on the screen
+$(".Search").on("click", function () {
   var SearchTerm = $(this).attr("name");
   var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
     SearchTerm + "&api_key=qXR34Xj4g5cgE8V3Bza9Q07qHGQUybQR&limit=10";
 
+  // Ajax call to giphy to pull images
   $.ajax({
     url: queryURL,
     method: "GET"
   }).then(function (response) {
 
+    // var to hold data from giphy
     var results = response.data;
-    console.log(results);
+
     // for loop that creates div and adds information recived from giphy
     for (var i = 0; i < results.length; i++) {
 
@@ -52,6 +76,7 @@ $("button").on("click", function () {
 
     }
 
+    // Plays and stops the gifs when clicked
     $('.gif').on("click", function () {
 
       // Pulls attribute to see if the gif is playing or not
